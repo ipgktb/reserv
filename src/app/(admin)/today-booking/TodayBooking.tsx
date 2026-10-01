@@ -12,7 +12,6 @@ import { useTodayReports } from "@/features/reservation/useReservationReports";
 import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 
-const WHATSAPP_LINK = "https://wa.me/";
 
 export function TodayBooking() {
   const { data, loading, formatTime } = useTodayReports();
