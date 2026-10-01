@@ -32,25 +32,15 @@ export function useReservationReports() {
 
 export type TodayBookingData = {
   id: string;
-
   booking_date: string;
-
   status: string;
-
   room_id: string;
-
   booker_id: string;
-
   capacity: number;
-
   booker_name: string;
-
   booker_phone: string | null;
-
   room_name: string;
-
   start_time: string;
-
   end_time: string;
 };
 

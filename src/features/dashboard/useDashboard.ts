@@ -8,17 +8,6 @@ import {
 
 const ITEMS_PER_PAGE = 10;
 
-function getMinutes(slot: string) {
-  const start = slot.split(" - ")[0];
-  const [time, period] = start.split(" ");
-  const [parsedHour, minute] = time.split(":").map(Number);
-  let hour = parsedHour;
-  if (period === "PM" && hour !== 12) hour += 12;
-  if (period === "AM" && hour === 12) hour = 0;
-
-  return hour * 60 + minute;
-}
-
 const getCurrentMonth = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -44,50 +33,21 @@ export function useDashboard() {
     setCurrentPage(1);
   }, [month, searchPhone]);
 
-  // const filtered = useMemo(() => {
-  //   if (!reservations) return [];
-
-  //   return reservations
-
-  //     .filter((r) => {
-  //       const matchesMonth = r.booking_date?.startsWith(month);
-
-  //       const matchesPhone =
-  //         searchPhone.trim() === "" ||
-  //         (r.booker_phone ?? "").includes(searchPhone.trim());
-
-  //       return matchesMonth && matchesPhone;
-  //     })
-
-  //     .sort((a, b) => {
-  //       const dateCompare =
-  //         new Date(b.booking_date).getTime() -
-  //         new Date(a.booking_date).getTime();
-
-  //       if (dateCompare !== 0) return dateCompare;
-  //       return getMinutes(b.time_slot ?? "") - getMinutes(a.time_slot ?? "");
-  //     });
-  // }, [reservations, month, searchPhone]);
-
   const filtered = useMemo(() => {
     if (!reservations) return [];
 
     return reservations
       .filter((r) => {
         const matchesMonth = r.booking_date?.startsWith(month);
-
         const matchesPhone =
           searchPhone.trim() === "" ||
           (r.booker_phone ?? "").includes(searchPhone.trim());
-
         return matchesMonth && matchesPhone;
       })
       .sort((a, b) => {
         const first = new Date(a.booking_date).getTime();
         const second = new Date(b.booking_date).getTime();
-
         const cmp = first - second;
-
         return sortDescriptor.direction === "descending" ? -cmp : cmp;
       });
   }, [reservations, month, searchPhone, sortDescriptor]);
@@ -97,9 +57,7 @@ export function useDashboard() {
     const total = filtered.length;
     const confirmed = filtered.filter((r) => r.status === "confirmed").length;
     const cancelled = filtered.filter((r) => r.status === "cancelled").length;
-
     const rooms = new Set(filtered.map((r) => r.room_id)).size;
-
     return { total, confirmed, cancelled, rooms };
   }, [filtered]);
 
