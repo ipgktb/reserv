@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/features/data/cleanup-reservations.repository.ts"  ],
   "exclude": [
     "node_modules"
   ]
