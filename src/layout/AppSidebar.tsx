@@ -23,6 +23,7 @@ import {
   Cog6ToothIcon,
   CalendarDaysIcon,
 } from "@heroicons/react/24/outline";
+import { BsDatabase } from "react-icons/bs";
 
 const navItems: NavItem[] = [
   {
@@ -59,6 +60,11 @@ const navItems: NavItem[] = [
     icon: <Cog6ToothIcon className="size-5" />,
     name: "Booking Settings",
     path: "/booking-setting",
+  },
+  {
+    icon: <BsDatabase className="size-5" />,
+    name: "Export Data",
+    path: "/data",
   },
 ];
 
