@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useSearch } from "@/components/useSearch";
-import { getBookersAction, updateBookerAction } from "./booker.actions";
+import {
+  deleteBookerAction,
+  getBookersAction,
+  updateBookerAction,
+} from "./booker.actions";
 
 type BookerUI = {
   id: string;
+  profile_id: string;
   name: string;
   phone_number: string;
   is_blocked: boolean;
@@ -62,6 +67,7 @@ export function useBookers() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchBookers();
   }, [fetchBookers]);
 
@@ -125,6 +131,22 @@ export function useBookers() {
   const paginatedBookers = filteredItems.slice(startIndex, endIndex);
 
   // -----------------------------
+  // Delete Booker
+  // -----------------------------
+  const deleteBooker = useCallback(
+    async (profileId: string) => {
+      const result = await deleteBookerAction(profileId);
+
+      if (!result.success) {
+        throw new Error(result.error ?? "Failed to delete account.");
+      }
+
+      await fetchBookers();
+    },
+    [fetchBookers],
+  );
+
+  // -----------------------------
   // Return
   // -----------------------------
 
@@ -145,6 +167,7 @@ export function useBookers() {
 
     // Actions
     toggleBlock,
+    deleteBooker,
     refresh: fetchBookers,
 
     //Searching

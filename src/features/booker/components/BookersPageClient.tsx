@@ -15,6 +15,7 @@ export function BookersPageClient() {
     openBlockModal,
     closeModal,
     toggleBlock,
+    deleteBooker,
     setQuery,
     query,
     paginatedBookers,
@@ -42,6 +43,7 @@ export function BookersPageClient() {
               <Table.Column>Total Bookings</Table.Column>
               <Table.Column>Status</Table.Column>
               <Table.Column>Block</Table.Column>
+              <Table.Column>Actions</Table.Column>
             </Table.Header>
 
             <Table.Body>
@@ -73,18 +75,6 @@ export function BookersPageClient() {
                   </Table.Cell>
 
                   <Table.Cell>
-                    {/* <button
-                      type="button"
-                      onClick={() => openBlockModal(booker)}
-                      className={`rounded border px-3 py-1 text-xs transition ${
-                        booker.is_blocked
-                          ? "border-green-200 text-green-600 hover:bg-green-50"
-                          : "border-red-200 text-red-600 hover:bg-red-50"
-                      }`}
-                    >
-                      {booker.is_blocked ? "Unblock" : "Block"}
-                    </button> */}
-
                     <Button
                       type="button"
                       variant="outline"
@@ -98,6 +88,37 @@ export function BookersPageClient() {
                     >
                       {booker.is_blocked ? "Unblock" : "Block"}
                     </Button>
+                  </Table.Cell>
+
+                  {/* DELETE PROFILE */}
+                  <Table.Cell>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-red-200 text-red-600 hover:bg-red-50"
+                        size="sm"
+                        onPress={async () => {
+                          const confirmed = window.confirm(
+                            `Permanently delete ${booker.name}'s account and all associated bookings? This cannot be undone.`,
+                          );
+
+                          if (!confirmed) return;
+
+                          try {
+                            await deleteBooker(booker.profile_id);
+                          } catch (error) {
+                            window.alert(
+                              error instanceof Error
+                                ? error.message
+                                : "Failed to delete account.",
+                            );
+                          }
+                        }}
+                      >
+                        Delete Account
+                      </Button>
+                    </div>
                   </Table.Cell>
                 </Table.Row>
               ))}
