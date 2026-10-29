@@ -253,13 +253,13 @@ const AppSidebar: React.FC = () => {
         <Link href="/" className="block">
           {isExpanded || isHovered || isMobileOpen ? (
             <span className="text-[1.4rem] font-black leading-none tracking-[-0.055em] text-foreground">
-              {`Za'ba`}
+              {`ADMIN`}
 
-              <span className="text-primary">{""}Library</span>
+              <span className="text-primary">{""}</span>
             </span>
           ) : (
             <span className="text-[1.4rem] font-black leading-none tracking-[-0.06em] text-primary">
-              Z
+              A
             </span>
           )}
         </Link>

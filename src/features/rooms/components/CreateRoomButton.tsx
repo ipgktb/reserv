@@ -100,7 +100,7 @@ export function CreateRoomButton() {
                     </TextField>
 
                     <Select isRequired name="teacherOnly">
-                      <Label>Untuk VIP</Label>
+                      <Label>Untuk Pensyarah</Label>
 
                       <Select.Trigger>
                         <Select.Value />
